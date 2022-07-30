@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="@string/customer"
+        android:icon="@drawable/fd_customer_user_icon"
+        android:id="@+id/main_login_customer"
+        />
+
+    <item
+        android:title="@string/admin"
+        android:icon="@drawable/fd_admin_icon"
+        android:id="@+id/main_login_admin"
+        />
+
+
+</menu>

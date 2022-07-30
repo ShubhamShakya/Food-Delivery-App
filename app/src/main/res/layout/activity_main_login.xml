@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.MainLogin">
+
+
+    <!--<FrameLayout
+        android:id="@+id/main_login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/main_login_navigation_view"
+         />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_login_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/main_menu_login" />-->
+
+    <FrameLayout
+        android:id="@+id/main_login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/main_login_navigation_view" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_login_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/main_menu_login"
+         />
+
+
+</RelativeLayout>
