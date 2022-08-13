@@ -84,16 +84,18 @@ public class AdminLoginFragment extends Fragment {
     }
 
     private void verifyPassword() {
-        String tempPassword = binding.restaurantIDLogin.getEditText().getText().toString();
+        String tempPassword = Objects.requireNonNull(binding.restaurantIDLogin.getEditText()).getText().toString();
         if(tempPassword.equals(sharedPreferences.getString("Current Restaurant Password",null))){
             Intent intent = new Intent(getContext(), RestaurantAdminDashboard.class);
             intent.putExtra(FDConstants.RESTAURANT_ID,restaurantId);
             startActivity(intent);
+        }else{
+            binding.restaurantIDLogin.getEditText().setError(getString(R.string.incorrect_password));
         }
     }
 
     private void fetchingDataAndVerifyingRestaurantCredentials() {
-        restaurantId = binding.restaurantIDLogin.getEditText().getText().toString();
+        restaurantId = Objects.requireNonNull(binding.restaurantIDLogin.getEditText()).getText().toString();
 
         if(restaurantId.isEmpty()){
             Toast.makeText(getContext(),"Restaurant ID is Empty.",Toast.LENGTH_LONG).show();

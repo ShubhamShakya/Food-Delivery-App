@@ -37,4 +37,13 @@ public class FDConstants {
 
 
     public static final String RESTAURANT_ORDERS = "restaurantOrders";
+
+
+    public static final String FOOD_ITEM_ID = "foodItemID";
+    public static final String FOOD_ITEM_IMAGE_URL = "imageUrl";
+    public static final String FOOD_ITEM_PRICE = "itemPrice";
+    public static final String FOOD_ITEM_NAME = "itemName";
+
+
+    public static final String FOOD_ITEM_UPDATE_ADAPTER_POSITION = "foodItemAdapterPosition";
 }

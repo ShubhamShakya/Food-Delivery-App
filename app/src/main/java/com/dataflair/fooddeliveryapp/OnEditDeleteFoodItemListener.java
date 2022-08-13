@@ -6,5 +6,5 @@ public interface OnEditDeleteFoodItemListener {
 
     void onConfirmDelete(int position, FoodItem foodItem);
 
-    void onEditFoodItem();
+    void onEditFoodItem(int foodItemPosition);
 }
