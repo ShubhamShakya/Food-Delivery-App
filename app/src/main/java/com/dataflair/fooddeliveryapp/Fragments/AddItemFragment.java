@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -257,7 +258,7 @@ public class AddItemFragment extends Fragment {
                                     //Removing fields of Add Item.
                                     Objects.requireNonNull(itemNameEditTxt.getEditText()).setText("");
                                     Objects.requireNonNull(itemPriceEditTxt.getEditText()).setText("");
-                                    imageView.setImageURI(null);
+                                    imageView.setImageDrawable(AppCompatResources.getDrawable(getContext(),R.drawable.add_item_icon));
 
                                 }
                             });

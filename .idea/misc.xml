@@ -6,7 +6,9 @@
         <entry key="..\:/Users/shubham shakya/.gradle/caches/transforms-2/files-2.1/595a5cbbc7655f1bb8876ce06701b852/core-1.7.0/res/layout/custom_dialog.xml" value="0.536" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/arrow_down.xml" value="0.191" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/border_box_grey_black.xml" value="0.191" />
+        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/colored_black_border_rectangle.xml" value="0.264" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/colored_border.xml" value="0.191" />
+        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/colored_border_rectangle.xml" value="0.185" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/profile_icon.xml" value="0.1745" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/upward_arrow.xml" value="0.1945" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/activity_admin.xml" value="0.25416666666666665" />
@@ -21,11 +23,12 @@
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/admin_orders_file.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/base_fragment_bottom_sheet.xml" value="0.253125" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/colored_border.xml" value="0.18984375" />
+        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/colored_border_rectangle.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/confirmation_bottom_sheet_for_add_restaurant.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/custom_dialog_box_restaurant_id_edit_delete_food_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/custom_dialog_box_restaurant_id_edit_delete_food_item.xml" value="0.4" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/dailog_asking_pass_admin_before_delete_restaurant.xml" value="0.2" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/data_added_successfully.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/delete_food_item_restaurant_admin.xml" value="0.536" />
+        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/delete_food_item_restaurant_admin.xml" value="0.6" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/delete_restaurant_item_main_admin.xml" value="0.4" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/fragment_add_item.xml" value="0.264" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/fragment_add_restaurant_frament.xml" value="0.25416666666666665" />

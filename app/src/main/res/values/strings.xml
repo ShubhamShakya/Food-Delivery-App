@@ -48,7 +48,7 @@
     <string name="enter_secret_password">Enter Secret Password</string>
     <string name="login">LogIn</string>
     <string name="add_food_item">Add Food Item</string>
-    <string name="remove_a_food_item">Remove a food item</string>
+    <string name="remove_a_food_item">Remove a Food Item</string>
     <string name="food_items">Food Items</string>
     <string name="update_password">Update Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
@@ -62,4 +62,6 @@
     <string name="update">Update</string>
     <string name="food_item_added_to_menu">Food Item Added to Menu</string>
     <string name="incorrect_password">Incorrect Password</string>
+    <string name="restaurant_id">Restaurant Id</string>
+    <string name="enter_restaurant_id">Enter Restaurant Id</string>
 </resources>
