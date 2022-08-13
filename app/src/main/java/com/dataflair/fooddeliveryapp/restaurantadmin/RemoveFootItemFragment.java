@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dataflair.fooddeliveryapp.FDConstants;
+import com.dataflair.fooddeliveryapp.Fragments.AddItemFragment;
 import com.dataflair.fooddeliveryapp.Model.FoodItem;
 import com.dataflair.fooddeliveryapp.Model.Model;
 import com.dataflair.fooddeliveryapp.OnEditDeleteFoodItemListener;
@@ -79,8 +80,19 @@ public class RemoveFootItemFragment extends Fragment {
             }
 
             @Override
-            public void onEditFoodItem() {
+            public void onEditFoodItem(int foodItemPosition) {
 
+                AddItemFragment addItemFragment = new AddItemFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt(FDConstants.FOOD_ITEM_UPDATE_ADAPTER_POSITION,foodItemPosition);
+
+                addItemFragment.setArguments(bundle);
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.restaurant_admin_dashboard_layout,addItemFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         binding.deleteFoodItemRecyclerView.setAdapter(removeFoodItemAdapter);

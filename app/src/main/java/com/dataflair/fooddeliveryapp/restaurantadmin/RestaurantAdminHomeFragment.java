@@ -49,6 +49,8 @@ public class RestaurantAdminHomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        RestaurantAdminDashboard.isUpdateFoodItem = false;
+
         binding.addFoodItemRestaurantAdmin.setOnClickListener(v->{
             addFoodItem();
         });

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.dataflair.fooddeliveryapp.FDConstants;
+import com.dataflair.fooddeliveryapp.Model.FoodItem;
 import com.dataflair.fooddeliveryapp.R;
 import com.dataflair.fooddeliveryapp.databinding.ActivityRestaurantAdminDashboardBinding;
 import com.dataflair.fooddeliveryapp.databinding.FragmentRestaurantAdminHomeBinding;
@@ -22,12 +23,17 @@ import com.dataflair.fooddeliveryapp.mainadmin.restaurant_database.ModelRestaura
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RestaurantAdminDashboard extends AppCompatActivity {
 
     private BottomNavigationView restaurantAdminBottomNavigationView;
     private ActivityRestaurantAdminDashboardBinding binding;
     private ModelRestaurant modelRestaurant;
     public static String currentRestaurantId;
+    public static List<FoodItem> foodItemList;
+    public static boolean isUpdateFoodItem;
 
 
     @Override

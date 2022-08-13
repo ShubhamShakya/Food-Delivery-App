@@ -3,7 +3,7 @@ package com.dataflair.fooddeliveryapp.Model;
 public class Model {
 
     String displayName, cityName, profilepic, pinCode, phoneNumber, address,userId,email;
-    String hotelLocation, imageUrl, itemName, itemPrice;
+    String hotelLocation, imageUrl, itemName, itemPrice,foodItemID;
     private String restaurantName;
     private String restaurantOwnerName;
     private String restaurantAddress;
@@ -26,6 +26,14 @@ public class Model {
         this.imageUrl = imageUrl;
         this.itemName = itemName;
         this.itemPrice = itemPrice;
+    }
+
+    public String getFoodItemId() {
+        return foodItemID;
+    }
+
+    public void setFoodItemId(String foodItemId) {
+        this.foodItemID = foodItemID;
     }
 
     public String getEmail() {

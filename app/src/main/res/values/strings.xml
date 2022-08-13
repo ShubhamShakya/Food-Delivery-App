@@ -59,4 +59,7 @@
     <string name="enter_the_mobile_number">Enter the Mobile Number</string>
     <string name="total_order_count">Total Order Count</string>
     <string name="send_verification_mail">Send Verification Mail</string>
+    <string name="update">Update</string>
+    <string name="food_item_added_to_menu">Food Item Added to Menu</string>
+    <string name="incorrect_password">Incorrect Password</string>
 </resources>

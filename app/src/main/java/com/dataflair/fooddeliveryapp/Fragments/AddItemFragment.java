@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,11 @@ import android.widget.Toast;
 
 import com.dataflair.fooddeliveryapp.Activities.AdminActivity;
 import com.dataflair.fooddeliveryapp.FDConstants;
+import com.dataflair.fooddeliveryapp.Model.FoodItem;
 import com.dataflair.fooddeliveryapp.R;
 import com.dataflair.fooddeliveryapp.login.MainLogin;
+import com.dataflair.fooddeliveryapp.restaurantadmin.DataAddedSuccessfully;
+import com.dataflair.fooddeliveryapp.restaurantadmin.RestaurantAdminDashboard;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -52,6 +57,8 @@ public class AddItemFragment extends Fragment {
     StorageReference storageReference;
     Uri imageUri;
     ProgressBar progressBarAddItem;
+    private int updateFoodItemPosition;
+    private FoodItem mUpdateFoodItem;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -99,6 +106,22 @@ public class AddItemFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child(FDConstants.MAIN_ADMIN).child(FDConstants.RESTAURANT).child(MainLogin.currentRestaurantMobileNumber);
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        Log.e("Add Item Fragment "," isUpdateFoodItem : " + RestaurantAdminDashboard.isUpdateFoodItem);
+
+        if(RestaurantAdminDashboard.isUpdateFoodItem) {
+            // position of food item which is going to be edited.
+            updateFoodItemPosition = getArguments().getInt(FDConstants.FOOD_ITEM_UPDATE_ADAPTER_POSITION);
+            // get details of food item which is going to be edited.
+            mUpdateFoodItem = RestaurantAdminDashboard.foodItemList.get(updateFoodItemPosition);
+
+            if (mUpdateFoodItem != null) {
+                Picasso.get().load(mUpdateFoodItem.getFoodItemImgUrl()).into(imageView);
+                Objects.requireNonNull(itemNameEditTxt.getEditText()).setText(mUpdateFoodItem.getItemName());
+                Objects.requireNonNull(itemPriceEditTxt.getEditText()).setText(mUpdateFoodItem.getItemPrice());
+            }
+            submitBtn.setText(requireContext().getResources().getText(R.string.update));
+        }
+
 
         //Setting onClick Listener for the imageView To select image
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -133,18 +156,62 @@ public class AddItemFragment extends Fragment {
                     progressBarAddItem.setVisibility(View.GONE);
                     submitBtn.setVisibility(View.VISIBLE);
                     Toast.makeText(getContext(), "Please Enter Details", Toast.LENGTH_SHORT).show();
-                } else if (imageUri == null) {
+                } else if (imageUri == null && !RestaurantAdminDashboard.isUpdateFoodItem) {
                     progressBarAddItem.setVisibility(View.GONE);
                     submitBtn.setVisibility(View.VISIBLE);
                     Toast.makeText(getContext(), "Please Upload Image", Toast.LENGTH_SHORT).show();
                 } else {
-                    //calling the method to add data to fireabase
-                    uploadData(imageUri, itemName, itemPrice);
+                    //calling the method to add/update data to firebase
+                    if (RestaurantAdminDashboard.isUpdateFoodItem) {
+                        updateData(new FoodItem(imageUri==null ? null : imageUri.toString(), itemName, itemPrice,mUpdateFoodItem.getFoodItemId()));
+                    } else {
+                        uploadData(imageUri, itemName, itemPrice);
+                    }
                 }
             }
         });
 
         return view;
+    }
+
+
+
+    private void updateData(FoodItem foodItem) {
+        //Hash map to store values
+        HashMap<String,Object> foodDetails = new HashMap<>();
+        RestaurantAdminDashboard.isUpdateFoodItem = false;
+
+
+        //adding the data to hashmap
+        if(imageUri == null){
+            foodDetails.put(FDConstants.FOOD_ITEM_NAME, foodItem.getItemName());
+            foodDetails.put(FDConstants.FOOD_ITEM_PRICE, foodItem.getItemPrice());
+            foodDetails.put(FDConstants.FOOD_ITEM_IMAGE_URL,mUpdateFoodItem.getFoodItemImgUrl());
+        }else{
+            foodDetails.put(FDConstants.FOOD_ITEM_NAME, foodItem.getItemName());
+            foodDetails.put(FDConstants.FOOD_ITEM_PRICE, foodItem.getItemPrice());
+            foodDetails.put(FDConstants.FOOD_ITEM_IMAGE_URL, foodItem.getFoodItemImgUrl());
+        }
+
+
+        databaseReference.child(FDConstants.FOOD_ITEMS).child(foodItem.getFoodItemId()).updateChildren(foodDetails)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        progressBarAddItem.setVisibility(View.GONE);
+                        submitBtn.setVisibility(View.VISIBLE);
+                        DataAddedSuccessfully dataAddedSuccessfully = new DataAddedSuccessfully();
+                        dataAddedSuccessfully.show(getActivity().getSupportFragmentManager(),"");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext()," Error in Updated Data, Please Try After Sometime",Toast.LENGTH_LONG).show();
+                        progressBarAddItem.setVisibility(View.GONE);
+                        submitBtn.setVisibility(View.VISIBLE);
+                    }
+                });
+
     }
 
     private void uploadData(Uri imageUri, String itemName, String itemPrice) {
@@ -167,24 +234,30 @@ public class AddItemFragment extends Fragment {
                             HashMap<String,String> foodDetails = new HashMap();
 
                             //adding the data to hashmap
-                            foodDetails.put("itemName", itemName);
-                            foodDetails.put("itemPrice", "₹"+itemPrice);
-                            foodDetails.put("imageUrl", uri.toString());
+                            foodDetails.put(FDConstants.FOOD_ITEM_NAME, itemName);
+                            foodDetails.put(FDConstants.FOOD_ITEM_PRICE,itemPrice);
+                            foodDetails.put(FDConstants.FOOD_ITEM_IMAGE_URL, uri.toString());
+                            foodDetails.put(FDConstants.FOOD_ITEM_ID,push);
 
-                            //uploading the data to the fireabase
+                            //uploading the data to the firebase
                             databaseReference.child(FDConstants.FOOD_ITEMS).child(push).setValue(foodDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     progressBarAddItem.setVisibility(View.GONE);
                                     submitBtn.setVisibility(View.VISIBLE);
 
-                                    //Calling the same intent to reset all the current data
+                                   /* //Calling the same intent to reset all the current data
                                     Intent intent = new Intent(getContext(), AdminActivity.class);
                                     getActivity().startActivity(intent);
-                                    getActivity().finish();
+                                    getActivity().finish();*/
 
                                     //Showing the toast to user for confirmation
-                                    Toast.makeText(getContext(), "Data Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), getString(R.string.food_item_added_to_menu), Toast.LENGTH_LONG).show();
+
+                                    //Removing fields of Add Item.
+                                    Objects.requireNonNull(itemNameEditTxt.getEditText()).setText("");
+                                    Objects.requireNonNull(itemPriceEditTxt.getEditText()).setText("");
+                                    imageView.setImageURI(null);
 
                                 }
                             });
