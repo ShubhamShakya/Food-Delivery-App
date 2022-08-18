@@ -10,6 +10,7 @@
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/colored_border.xml" value="0.191" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/colored_border_rectangle.xml" value="0.185" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/profile_icon.xml" value="0.1745" />
+        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/rounded_cornor_bottom_sheet.xml" value="0.185" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/drawable/upward_arrow.xml" value="0.1945" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/activity_admin.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/activity_get_started.xml" value="0.25416666666666665" />
@@ -48,10 +49,11 @@
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/fragment_restaurant_admin_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/fragment_second.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/fragment_user_forgot_password.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/fragment_user_login.xml" value="0.1" />
+        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/fragment_user_login.xml" value="0.2" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/fragment_user_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/nested_item_food_item.xml" value="0.4" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/restaurnat_list_main_admin.xml" value="0.20854700854700856" />
+        <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/rounded_cornor_bottom_sheet.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/single_food_item.xml" value="0.4" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/layout/user_food_orders.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/shubham shakya/Downloads/FoodDeliveryApp/app/src/main/res/menu/admin_bottom_menu.xml" value="0.25416666666666665" />

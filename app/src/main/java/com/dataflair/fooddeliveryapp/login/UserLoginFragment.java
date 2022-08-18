@@ -74,7 +74,7 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener{
 
         mContext = view.getContext();
 
-        //Google Signin Options to get gmail and performa gmail login
+        //Google Sign in Options to get gmail and perform gmail login
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 //.requestIdToken("319466083877-4cdnl01r8q8p84nqgtcp42tv8cn0dq12.apps.googleusercontent.com")
@@ -198,7 +198,6 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener{
             case R.id.tv_forget_password_customer:
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_login_layout,new UserForgotPasswordFragment())
                                 .commit();
-                Toast.makeText(mContext,"forgot password text pressed",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_google_sign_in:
                 //Showing all Gmails to the user

@@ -64,4 +64,7 @@
     <string name="incorrect_password">Incorrect Password</string>
     <string name="restaurant_id">Restaurant Id</string>
     <string name="enter_restaurant_id">Enter Restaurant Id</string>
+    <string name="please_wait">Please Wait...</string>
+    <string name="cancel_order">Cancel Order!</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure, You want to Delete this Food Item.</string>
 </resources>

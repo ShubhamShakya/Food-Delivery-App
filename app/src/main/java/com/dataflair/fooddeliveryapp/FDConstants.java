@@ -46,4 +46,7 @@ public class FDConstants {
 
 
     public static final String FOOD_ITEM_UPDATE_ADAPTER_POSITION = "foodItemAdapterPosition";
+    public static final String FOOD_ITEM_ORDER_ID = "foodItemOrderId";
+
+
 }

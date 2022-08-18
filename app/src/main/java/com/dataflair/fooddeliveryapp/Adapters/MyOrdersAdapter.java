@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dataflair.fooddeliveryapp.FDConstants;
 import com.dataflair.fooddeliveryapp.Fragments.HomeFragment;
 import com.dataflair.fooddeliveryapp.Fragments.MyOrdersFragment;
 import com.dataflair.fooddeliveryapp.MainActivity;
@@ -64,9 +65,9 @@ public class MyOrdersAdapter extends FirebaseRecyclerAdapter<Model, MyOrdersAdap
             public void onClick(View view) {
 
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(view.getContext());
-                builder1.setTitle("Cancel Order!");
+                builder1.setTitle(R.string.cancel_order);
                 builder1.setIcon(R.drawable.alert_icon_dialog_box);
-                builder1.setMessage("Are you sure, you want to Cancel Order.");
+                builder1.setMessage(R.string.are_you_sure_you_want_to_delete);
                 builder1.setCancelable(true);
 
                 builder1.setPositiveButton(
@@ -85,7 +86,7 @@ public class MyOrdersAdapter extends FirebaseRecyclerAdapter<Model, MyOrdersAdap
 
                                 //Path to the database
                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("myOrders").child(emailAsFirebaseKey);
-                                reference.orderByChild("itemName").equalTo(model.getItemName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                reference.orderByChild(FDConstants.FOOD_ITEM_ORDER_ID).equalTo(model.getFoodItemOrderId()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                                         for (DataSnapshot ds : snapshot.getChildren()) {
