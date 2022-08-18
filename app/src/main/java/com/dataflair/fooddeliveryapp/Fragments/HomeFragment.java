@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         progressBarDialog = new ProgressDialog(getContext());
-        progressBarDialog.setMessage("PleaseWait...");
+        progressBarDialog.setMessage(getString(R.string.please_wait));
 
 
         onCancelOrderListner = new OnConfirmOrderListener() {
@@ -110,13 +110,6 @@ public class HomeFragment extends Fragment {
 
         //Assigning the Recyclerview to display all food items
         recyclerView = (RecyclerView) view.findViewById(R.id.HomeRecyclerView);
-
-
-        //Firebase Recycler Options to get the data form firebase database using model class and reference
-       /* FirebaseRecyclerOptions<Model> options =
-                new FirebaseRecyclerOptions.Builder<Model>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child(FDConstants.MAIN_ADMIN).child(FDConstants.RESTAURANT), Model.class)
-                        .build();*/
 
 
 

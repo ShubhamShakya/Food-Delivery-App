@@ -76,6 +76,7 @@ public class AddressConfirmBottomSheet extends FDBottomSheet<AddressConfirmBefor
 
         //get the updated data
         HashMap<String, String> orderDetails = getDataWithOrderDetails();
+        orderDetails.put(FDConstants.FOOD_ITEM_ORDER_ID,key);
 
         //Adding the hash map to the database
         FirebaseDatabase.getInstance().getReference().child("myOrders").child(emailAsFirebaseKey).child(key)

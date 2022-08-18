@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -49,14 +50,14 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddItemFragment extends Fragment {
 
-
-    Button submitBtn;
-    ImageView imageView;
-    TextInputLayout itemNameEditTxt, itemPriceEditTxt, hotelLocationEditTxt;
-    DatabaseReference databaseReference;
-    StorageReference storageReference;
-    Uri imageUri;
-    ProgressBar progressBarAddItem;
+    private final String TAG = getClass().getSimpleName();
+    private Button submitBtn;
+    private ImageView imageView;
+    private TextInputLayout itemNameEditTxt, itemPriceEditTxt, hotelLocationEditTxt;
+    private DatabaseReference databaseReference;
+    private StorageReference storageReference;
+    private Uri imageUri;
+    private ProgressBar progressBarAddItem;
     private int updateFoodItemPosition;
     private FoodItem mUpdateFoodItem;
 
@@ -106,7 +107,7 @@ public class AddItemFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child(FDConstants.MAIN_ADMIN).child(FDConstants.RESTAURANT).child(MainLogin.currentRestaurantMobileNumber);
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        Log.e("Add Item Fragment "," isUpdateFoodItem : " + RestaurantAdminDashboard.isUpdateFoodItem);
+        Log.i(TAG," isUpdateFoodItem : " + RestaurantAdminDashboard.isUpdateFoodItem);
 
         if(RestaurantAdminDashboard.isUpdateFoodItem) {
             // position of food item which is going to be edited.
@@ -206,7 +207,7 @@ public class AddItemFragment extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext()," Error in Updated Data, Please Try After Sometime",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext()," Error in Updated Data, Please Try After Sometime.",Toast.LENGTH_LONG).show();
                         progressBarAddItem.setVisibility(View.GONE);
                         submitBtn.setVisibility(View.VISIBLE);
                     }
@@ -246,18 +247,13 @@ public class AddItemFragment extends Fragment {
                                     progressBarAddItem.setVisibility(View.GONE);
                                     submitBtn.setVisibility(View.VISIBLE);
 
-                                   /* //Calling the same intent to reset all the current data
-                                    Intent intent = new Intent(getContext(), AdminActivity.class);
-                                    getActivity().startActivity(intent);
-                                    getActivity().finish();*/
-
                                     //Showing the toast to user for confirmation
                                     Toast.makeText(getContext(), getString(R.string.food_item_added_to_menu), Toast.LENGTH_LONG).show();
 
                                     //Removing fields of Add Item.
                                     Objects.requireNonNull(itemNameEditTxt.getEditText()).setText("");
                                     Objects.requireNonNull(itemPriceEditTxt.getEditText()).setText("");
-                                    imageView.setImageURI(null);
+                                    imageView.setImageDrawable(AppCompatResources.getDrawable(getContext(),R.drawable.add_item_icon));
 
                                 }
                             });

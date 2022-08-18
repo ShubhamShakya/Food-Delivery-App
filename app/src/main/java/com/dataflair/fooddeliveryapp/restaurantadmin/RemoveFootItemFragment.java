@@ -64,8 +64,6 @@ public class RemoveFootItemFragment extends Fragment {
 
         binding.deleteFoodItemRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //myPatientDoctorAdapter=new MyPatientDoctorAdapter(this,list);
-
         FirebaseRecyclerOptions<Model> options =
                 new FirebaseRecyclerOptions.Builder<Model>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child(FDConstants.MAIN_ADMIN).child(FDConstants.RESTAURANT).child(MainLogin.currentRestaurantMobileNumber).child(FDConstants.FOOD_ITEMS), Model.class)
@@ -76,12 +74,10 @@ public class RemoveFootItemFragment extends Fragment {
             @Override
             public void onConfirmDelete(int position, FoodItem foodItem) {
                     showMessage(getView(),position,foodItem);
-
             }
 
             @Override
             public void onEditFoodItem(int foodItemPosition) {
-
                 AddItemFragment addItemFragment = new AddItemFragment();
 
                 Bundle bundle = new Bundle();
@@ -96,8 +92,6 @@ public class RemoveFootItemFragment extends Fragment {
             }
         });
         binding.deleteFoodItemRecyclerView.setAdapter(removeFoodItemAdapter);
-
-
     }
 
     private void permanentlyDeleteFoodItem(String restaurantId,int position,FoodItem foodItem) {

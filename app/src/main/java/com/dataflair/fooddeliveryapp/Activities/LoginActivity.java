@@ -37,13 +37,13 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String TAG = this.getClass().getSimpleName();
-    GoogleSignInClient mSignInClient;
-    FirebaseAuth firebaseAuth;
-    ProgressDialog progressBar;
-    Button signInButton;
-    TextInputLayout emailEditTxt, addressEditTxt, cityNameEditTxt, pinCodeEdittxt,passwordEdtTxt,confirmPasswordEdtTxt;
-    TextInputLayout mobileNumberTxt,displayNameTxt;
-    String email,cityName,address,pinCode,passwordString,confirmPasswordString,mobileNumber,displayName;
+    private GoogleSignInClient mSignInClient;
+    private FirebaseAuth firebaseAuth;
+    private ProgressDialog progressBar;
+    private Button signInButton;
+    private TextInputLayout emailEditTxt, addressEditTxt, cityNameEditTxt, pinCodeEdittxt,passwordEdtTxt,confirmPasswordEdtTxt;
+    private TextInputLayout mobileNumberTxt,displayNameTxt;
+    private String email,cityName,address,pinCode,passwordString,confirmPasswordString,mobileNumber,displayName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,12 +205,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     String pic = googleSignInAccount.getPhotoUrl().toString();
 
 
-                                   /* String phoneNumber = phoneNumberEditTxt.getText().toString();
-                                    String cityName = cityNameEditTxt.getText().toString();
-                                    String pinCode = pinCodeEdittxt.getText().toString();
-                                    String address = addressEditTxt.getText().toString();
-*/
-
                                     //user_details.put("id", id);
                                     user_details.put("name", name);
                                     user_details.put("mail", mail);
@@ -229,12 +223,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         public void onComplete(@NonNull @NotNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 progressBar.cancel();
-
-                                                //navigating to the main activity after user successfully registers
-                                                Intent intent = new Intent(getApplicationContext(), UserRoleActivity.class);
-                                                //Clears older activities and tasks
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                startActivity(intent);
                                             }
                                         }
                                     });
