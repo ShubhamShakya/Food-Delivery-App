@@ -79,7 +79,7 @@
                 android:id="@+id/mark_as_delivered"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Mark as Delivered"
+                android:text="@string/mark_as_delivered"
                 android:textColor="@color/green"
                 android:visibility="gone"
                 android:textSize="15dp"

@@ -2,6 +2,7 @@ package com.dataflair.fooddeliveryapp.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,61 +10,39 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.dataflair.fooddeliveryapp.Adapters.HomeAdapter;
 import com.dataflair.fooddeliveryapp.Adapters.MyOrdersAdapter;
+import com.dataflair.fooddeliveryapp.FDConstants;
 import com.dataflair.fooddeliveryapp.Model.Model;
 import com.dataflair.fooddeliveryapp.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.firebase.ui.database.ObservableSnapshotArray;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class MyOrdersFragment extends Fragment {
+public class MyOrdersFragment extends Fragment implements OnMarkDeliveredListener {
 
-    MyOrdersAdapter adapter;
-    RecyclerView recyclerView;
-    String userEmail;
-    FirebaseAuth mAuth;
+    private MyOrdersAdapter adapter;
+    private RecyclerView recyclerView;
+    private FirebaseAuth mAuth;
+    private String emailAsFirebaseKey;
 
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    private String mParam1;
-    private String mParam2;
 
     public MyOrdersFragment() {
         // Required empty public constructor
     }
 
 
-    public static MyOrdersFragment newInstance(String param1, String param2) {
-        MyOrdersFragment fragment = new MyOrdersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_orders, container, false);
+
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -74,16 +53,16 @@ public class MyOrdersFragment extends Fragment {
         //Fetching details of current login user
         String firebaseUserEmail = mAuth.getCurrentUser().getEmail();
 
-        String emailAsFirebaseKey = firebaseUserEmail.substring(0,firebaseUserEmail.lastIndexOf('@'));
+        emailAsFirebaseKey = firebaseUserEmail.substring(0,firebaseUserEmail.lastIndexOf('@'));
 
 
         //Firebase Recycler Options to get the data form firebase database using model class and reference
         FirebaseRecyclerOptions<Model> options =
                 new FirebaseRecyclerOptions.Builder<Model>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("myOrders").child(emailAsFirebaseKey), Model.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child(FDConstants.MY_ORDERS).child(emailAsFirebaseKey), Model.class)
                         .build();
 
-        adapter = new MyOrdersAdapter(options);
+        adapter = new MyOrdersAdapter(options,this);
 
         //setting the adapter to the recyclerview
         recyclerView.setAdapter(adapter);
@@ -105,5 +84,20 @@ public class MyOrdersFragment extends Fragment {
 
         //To stop listening for the data from teh firebase
         adapter.stopListening();
+    }
+
+    @Override
+    public void markAsDelivered(String foodOrderItemID) {
+            FirebaseDatabase.getInstance().getReference().child(FDConstants.MY_ORDERS).child(emailAsFirebaseKey).child(foodOrderItemID)
+                    .child(FDConstants.FOOD_ORDER_DELIVERED).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getContext(), R.string.food_delivered_successfully , Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getContext(),"Error! "+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
     }
 }

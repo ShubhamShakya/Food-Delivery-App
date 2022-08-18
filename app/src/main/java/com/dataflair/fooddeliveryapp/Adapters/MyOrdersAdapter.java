@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dataflair.fooddeliveryapp.FDConstants;
 import com.dataflair.fooddeliveryapp.Fragments.HomeFragment;
 import com.dataflair.fooddeliveryapp.Fragments.MyOrdersFragment;
+import com.dataflair.fooddeliveryapp.Fragments.OnMarkDeliveredListener;
 import com.dataflair.fooddeliveryapp.MainActivity;
 import com.dataflair.fooddeliveryapp.Model.Model;
 import com.dataflair.fooddeliveryapp.R;
@@ -43,9 +44,11 @@ public class MyOrdersAdapter extends FirebaseRecyclerAdapter<Model, MyOrdersAdap
 
 
     private FirebaseAuth mAuth;
+    private OnMarkDeliveredListener markDeliveredListener;
 
-    public MyOrdersAdapter(@NonNull FirebaseRecyclerOptions<Model> options) {
+    public MyOrdersAdapter(@NonNull FirebaseRecyclerOptions<Model> options, OnMarkDeliveredListener markDeliveredListener) {
         super(options);
+        this.markDeliveredListener = markDeliveredListener;
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -58,100 +61,112 @@ public class MyOrdersAdapter extends FirebaseRecyclerAdapter<Model, MyOrdersAdap
         holder.hostelLocation.setText(model.getHotelLocation());
         Picasso.get().load(model.getImageUrl()).into(holder.imageView);
 
+        if(model.isFoodOrderDelivered()){
+            holder.markAsDelivered.setVisibility(View.VISIBLE);
+            holder.cancelOrderBtn.setText(R.string.order_completed);
+            holder.cancelOrderBtn.setClickable(false);
+            holder.cancelOrderBtn.setAlpha(0.5f);
+            holder.markAsDelivered.setClickable(false);
+            holder.markAsDelivered.setAlpha(0.5f);
+        }else {
+            //Implementing the OnClick Listener to delete the data from the database
+            holder.cancelOrderBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        //Implementing the OnClick Listener to delete the data from the database
-        holder.cancelOrderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(view.getContext());
+                    builder1.setTitle(R.string.cancel_order);
+                    builder1.setIcon(R.drawable.alert_icon_dialog_box);
+                    builder1.setMessage(R.string.are_you_sure_you_want_to_delete);
+                    builder1.setCancelable(true);
 
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(view.getContext());
-                builder1.setTitle(R.string.cancel_order);
-                builder1.setIcon(R.drawable.alert_icon_dialog_box);
-                builder1.setMessage(R.string.are_you_sure_you_want_to_delete);
-                builder1.setCancelable(true);
+                    builder1.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    //Getting user id from the gmail sing in
+                                    //String userId = GoogleSignIn.getLastSignedInAccount(view.getContext()).getId();
 
-                builder1.setPositiveButton(
-                        "Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                //Getting user id from the gmail sing in
-                                //String userId = GoogleSignIn.getLastSignedInAccount(view.getContext()).getId();
+                                    //Getting the user email from google sign in
+                                    String firebaseUserEmail = mAuth.getCurrentUser().getEmail();
 
-                                //Getting the user email from google sign in
-                                String firebaseUserEmail = mAuth.getCurrentUser().getEmail();
+                                    //used as a key for database
+                                    String emailAsFirebaseKey = firebaseUserEmail.substring(0, firebaseUserEmail.lastIndexOf('@'));
 
-                                //used as a key for database
-                                String emailAsFirebaseKey = firebaseUserEmail.substring(0, firebaseUserEmail.lastIndexOf('@'));
+                                    //Path to the database
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("myOrders").child(emailAsFirebaseKey);
+                                    reference.orderByChild(FDConstants.FOOD_ITEM_ORDER_ID).equalTo(model.getFoodItemOrderId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                            for (DataSnapshot ds : snapshot.getChildren()) {
 
-                                //Path to the database
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("myOrders").child(emailAsFirebaseKey);
-                                reference.orderByChild(FDConstants.FOOD_ITEM_ORDER_ID).equalTo(model.getFoodItemOrderId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                                        for (DataSnapshot ds : snapshot.getChildren()) {
+                                                //getting the parent node of the data
+                                                String key = ds.getKey();
 
-                                            //getting the parent node of the data
-                                            String key = ds.getKey();
+                                                //removing the data from the database
+                                                reference.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            FirebaseDatabase.getInstance().getReference().child("totalOrders")
+                                                                    .child(key).removeValue()
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                                            if (task.isSuccessful()) {
 
-                                            //removing the data from the database
-                                            reference.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        FirebaseDatabase.getInstance().getReference().child("totalOrders")
-                                                                .child(key).removeValue()
-                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                                                        if (task.isSuccessful()) {
+                                                                                //Showing the Toast message to the user
+                                                                                Toast.makeText(view.getContext(), "Order Canceled Successfully", Toast.LENGTH_SHORT).show();
 
-                                                                            //Showing the Toast message to the user
-                                                                            Toast.makeText(view.getContext(), "Order Canceled Successfully", Toast.LENGTH_SHORT).show();
-
+                                                                            }
                                                                         }
-                                                                    }
-                                                                });
+                                                                    });
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
 
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
                                         }
-                                    }
+                                    });
+                                }
+                            });
 
-                                    @Override
-                                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                    builder1.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
 
-                                    }
-                                });
-                            }
-                        });
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+            });
 
-                builder1.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+            holder.markAsDelivered.setVisibility(View.VISIBLE);
 
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }
-        });
+            holder.markAsDelivered.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    markDeliveredListener.markAsDelivered(model.getFoodItemOrderId());
+                    holder.markAsDelivered.setClickable(false);
+                    holder.cancelOrderBtn.setText(R.string.order_completed);
+                    holder.cancelOrderBtn.setClickable(false);
+                    holder.cancelOrderBtn.setAlpha(0.5f);
+                    holder.markAsDelivered.setAlpha(0.5f);
+                }
+            });
 
-        holder.markAsDelivered.setVisibility(View.VISIBLE);
+        }
 
-        holder.markAsDelivered.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.cancelOrderBtn.setText(" Order Completed");
-                holder.cancelOrderBtn.setClickable(false);
-                holder.cancelOrderBtn.setAlpha(0.5f);
-                holder.markAsDelivered.setClickable(false);
-            }
-        });
 
     }
 
