@@ -75,11 +75,11 @@ public class AddressConfirmBottomSheet extends FDBottomSheet<AddressConfirmBefor
         String emailAsFirebaseKey = firebaseUserEmail.substring(0, firebaseUserEmail.lastIndexOf('@'));
 
         //get the updated data
-        HashMap<String, String> orderDetails = getDataWithOrderDetails();
+        HashMap<String, Object> orderDetails = getDataWithOrderDetails();
         orderDetails.put(FDConstants.FOOD_ITEM_ORDER_ID,key);
 
         //Adding the hash map to the database
-        FirebaseDatabase.getInstance().getReference().child("myOrders").child(emailAsFirebaseKey).child(key)
+        FirebaseDatabase.getInstance().getReference().child(FDConstants.MY_ORDERS).child(emailAsFirebaseKey).child(key)
                 .setValue(orderDetails)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -123,9 +123,9 @@ public class AddressConfirmBottomSheet extends FDBottomSheet<AddressConfirmBefor
 
     }
 
-    private HashMap<String, String> getDataWithOrderDetails() {
+    private HashMap<String, Object> getDataWithOrderDetails() {
         //Hash Map to store the values
-        HashMap<String, String> orderDetails = new HashMap();
+        HashMap<String, Object> orderDetails = new HashMap();
 
         //Adding the details to hashmap
         orderDetails.put("name", Objects.requireNonNull(binding.DisplayNameEditText.getEditText()).getText().toString());
@@ -138,6 +138,7 @@ public class AddressConfirmBottomSheet extends FDBottomSheet<AddressConfirmBefor
         orderDetails.put("itemPrice", model.getItemPrice());
         orderDetails.put("itemName", model.getItemName());
         orderDetails.put("imageUrl", model.getImageUrl());
+        orderDetails.put(FDConstants.FOOD_ORDER_DELIVERED,false);
         return orderDetails;
     }
 

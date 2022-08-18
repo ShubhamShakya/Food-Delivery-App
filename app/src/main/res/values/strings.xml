@@ -65,6 +65,9 @@
     <string name="restaurant_id">Restaurant Id</string>
     <string name="enter_restaurant_id">Enter Restaurant Id</string>
     <string name="please_wait">Please Wait...</string>
+    <string name="mark_as_delivered">Mark as Delivered</string>
     <string name="cancel_order">Cancel Order!</string>
     <string name="are_you_sure_you_want_to_delete">Are you sure, You want to Delete this Food Item.</string>
+    <string name="order_completed">Order Completed</string>
+    <string name="food_delivered_successfully">Great! Enjoy Your Food</string>
 </resources>

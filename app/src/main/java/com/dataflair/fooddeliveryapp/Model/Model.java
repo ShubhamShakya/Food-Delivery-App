@@ -2,14 +2,15 @@ package com.dataflair.fooddeliveryapp.Model;
 
 public class Model {
 
-    String displayName, cityName, profilepic, pinCode, phoneNumber, address,userId,email;
-    String hotelLocation, imageUrl, itemName, itemPrice,foodItemID,foodItemOrderId;
+    private String displayName, cityName, profilepic, pinCode, phoneNumber, address,userId,email;
+    private String hotelLocation, imageUrl, itemName, itemPrice,foodItemID,foodItemOrderId;
     private String restaurantName;
     private String restaurantOwnerName;
     private String restaurantAddress;
     private String restaurantMobileNumber;
     private String restaurantEmail;
     private String pinCodeRestaurant;
+    private boolean foodOrderDelivered;
 
     public Model() {
     }
@@ -35,9 +36,16 @@ public class Model {
     public void setFoodItemOrderId(String foodItemOrderId) {
         this.foodItemOrderId = foodItemOrderId;
     }
-
     public String getFoodItemId() {
         return foodItemID;
+    }
+
+    public boolean isFoodOrderDelivered() {
+        return foodOrderDelivered;
+    }
+
+    public void setFoodOrderDelivered(boolean foodOrderDelivered) {
+        this.foodOrderDelivered = foodOrderDelivered;
     }
 
     public void setFoodItemId(String foodItemId) {
