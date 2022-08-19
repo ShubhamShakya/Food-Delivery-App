@@ -70,4 +70,10 @@
     <string name="are_you_sure_you_want_to_delete">Are you sure, You want to Delete this Food Item.</string>
     <string name="order_completed">Order Completed</string>
     <string name="food_delivered_successfully">Great! Enjoy Your Food</string>
+    <string name="food_order_removed">Food Order Removed</string>
+    <string name="error">Error!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="permanently_remove">Permanently Remove</string>
+    <string name="permanently_remove_message">This will remove this order permanently.\nOnce the order is removed permanently it can\'t be restored.</string>
 </resources>

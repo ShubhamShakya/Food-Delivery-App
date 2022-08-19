@@ -1,8 +1,10 @@
 package com.dataflair.fooddeliveryapp.Fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,9 +20,14 @@ import com.dataflair.fooddeliveryapp.Model.Model;
 import com.dataflair.fooddeliveryapp.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 
 public class MyOrdersFragment extends Fragment implements OnMarkDeliveredListener {
@@ -48,7 +55,11 @@ public class MyOrdersFragment extends Fragment implements OnMarkDeliveredListene
 
         //Assigning the Recyclerview to display all ordered  food items
         recyclerView = (RecyclerView) view.findViewById(R.id.MyOrdersRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
 
         //Fetching details of current login user
         String firebaseUserEmail = mAuth.getCurrentUser().getEmail();
@@ -99,5 +110,40 @@ public class MyOrdersFragment extends Fragment implements OnMarkDeliveredListene
                             }
                         }
                     });
+    }
+
+    @Override
+    public void onLongClick(String foodItemOrderId) {
+
+        MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(requireContext());
+        materialAlertDialogBuilder.setIcon(R.drawable.alert_icon_dialog_box).setTitle(R.string.permanently_remove).setMessage(R.string.permanently_remove_message)
+                        .setCancelable(true).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseDatabase.getInstance().getReference().child(FDConstants.MY_ORDERS).child(emailAsFirebaseKey).child(foodItemOrderId)
+                                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(getContext(),R.string.food_order_removed,Toast.LENGTH_LONG).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getContext(),R.string.error+" "+e.getMessage(),Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                    }
+                }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                           AlertDialog alertDialog = materialAlertDialogBuilder.create();
+                           alertDialog.dismiss();
+                    }
+                }).show();
+
+
+
+
+
     }
 }

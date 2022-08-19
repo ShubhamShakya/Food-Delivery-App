@@ -12,6 +12,7 @@ import com.dataflair.fooddeliveryapp.R;
 import com.dataflair.fooddeliveryapp.databinding.AddressConfirmBeforeOrderPlaceBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,6 +26,7 @@ public class AddressConfirmBottomSheet extends FDBottomSheet<AddressConfirmBefor
     private Model model, userDataModel;
     private FirebaseAuth mAuth;
     private final static String TAG = AddressConfirmBottomSheet.class.getSimpleName();
+    private String mMobileNumber,mFullName,mFullAddress,mCity,mPinCode;
 
     public AddressConfirmBottomSheet(Model model, Model userDataModel) {
         super();
@@ -54,9 +56,64 @@ public class AddressConfirmBottomSheet extends FDBottomSheet<AddressConfirmBefor
         Objects.requireNonNull(binding.PinCodeExitText.getEditText()).setText(userDataModel.getPinCode());
 
         binding.ConfirmOrderButton.setOnClickListener(view -> {
-            onConfirmOrder();
+            binding.MobileNumberEditText.setError(null);
+            binding.AddressEditText.setError(null);
+            binding.PinCodeExitText.setError(null);
+            binding.DisplayNameEditText.setError(null);
+            binding.CityEditText.setError(null);
+            if(verifyingDetails()){
+                onConfirmOrder();
+            }
         });
     }
+
+    private boolean verifyingDetails() {
+        mMobileNumber = Objects.requireNonNull(binding.MobileNumberEditText.getEditText()).getText().toString();
+        mFullName = Objects.requireNonNull(binding.DisplayNameEditText.getEditText()).getText().toString();
+        mFullAddress = Objects.requireNonNull(binding.AddressEditText.getEditText()).getText().toString();
+        mCity = Objects.requireNonNull(binding.CityEditText.getEditText()).getText().toString();
+        mPinCode = Objects.requireNonNull(binding.PinCodeExitText.getEditText()).getText().toString();
+
+
+        return isMobileValidate() && isFullNameValidate() && isFullAddressValidate() && isCityValidate() && isPinCodeValidate();
+    }
+
+    private boolean isMobileValidate() {
+        if(mMobileNumber.isEmpty()){
+            binding.MobileNumberEditText.setError("Can't be empty");
+            return false;
+        }
+        return true;
+    }
+    private boolean isFullAddressValidate() {
+        if(mFullAddress.isEmpty()){
+            binding.AddressEditText.setError("Can't be empty");
+            return false;
+        }
+        return true;
+    }
+ private boolean isCityValidate() {
+        if(mCity.isEmpty()){
+            binding.CityEditText.setError("Can't be empty");
+            return false;
+        }
+        return true;
+    }
+ private boolean isPinCodeValidate() {
+        if(mPinCode.isEmpty()){
+            binding.PinCodeExitText.setError("Can't be empty");
+            return false;
+        }
+        return true;
+    }
+ private boolean isFullNameValidate() {
+        if(mFullName.isEmpty()){
+            binding.DisplayNameEditText.setError("Can't be empty");
+            return false;
+        }
+        return true;
+    }
+
 
     @Override
     protected boolean showFullScreen() {
