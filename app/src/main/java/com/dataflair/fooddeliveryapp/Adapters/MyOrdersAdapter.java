@@ -68,6 +68,16 @@ public class MyOrdersAdapter extends FirebaseRecyclerAdapter<Model, MyOrdersAdap
             holder.cancelOrderBtn.setAlpha(0.5f);
             holder.markAsDelivered.setClickable(false);
             holder.markAsDelivered.setAlpha(0.5f);
+
+            //On long press food item order can be deleted if it is delivered.
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    markDeliveredListener.onLongClick(model.getFoodItemOrderId());
+                    return true;
+                }
+            });
+
         }else {
             //Implementing the OnClick Listener to delete the data from the database
             holder.cancelOrderBtn.setOnClickListener(new View.OnClickListener() {

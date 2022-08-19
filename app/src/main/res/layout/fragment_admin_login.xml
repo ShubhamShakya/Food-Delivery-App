@@ -40,7 +40,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="20dp"
-        android:hint="Restaurant ID"
+        android:hint="@string/restaurant_id"
         android:textColorHint="@color/blackUsed"
         app:boxStrokeColor="@color/textBorderColor"
         app:layout_constraintEnd_toEndOf="parent"
