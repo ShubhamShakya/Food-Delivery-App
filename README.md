@@ -20,6 +20,10 @@
 # UI/Screenshots
 
 ![IMG_20220714_003553](https://user-images.githubusercontent.com/60223182/200159361-a9e42ea4-d980-46a7-8668-2aefe16320d6.jpg)
+
+![Screenshot_2022-07-14-14-58-01-42_2529849e1798d4a568315fb6de318029](https://user-images.githubusercontent.com/60223182/200159484-228241e9-7fc7-4502-86a1-c1e13b044553.jpg)
+
+![Screenshot_2022-07-14-14-58-18-35_2529849e1798d4a568315fb6de318029](https://user-images.githubusercontent.com/60223182/200159494-33bd0022-4adb-42ad-a7bf-1de220116ee1.jpg)
   
   
   
