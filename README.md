@@ -17,13 +17,23 @@
   *	Main admin is responsible for removing a restaurant from the app.
   *	Main admin can generate userID and password for individual restaurants.
   
-# UI/Screenshots
+## UI/Screenshots
+# Customers/User View
 
 ![IMG_20220714_003553](https://user-images.githubusercontent.com/60223182/200159361-a9e42ea4-d980-46a7-8668-2aefe16320d6.jpg)
 
 ![Screenshot_2022-07-14-14-58-01-42_2529849e1798d4a568315fb6de318029](https://user-images.githubusercontent.com/60223182/200159484-228241e9-7fc7-4502-86a1-c1e13b044553.jpg)
 
 ![Screenshot_2022-07-14-14-58-18-35_2529849e1798d4a568315fb6de318029](https://user-images.githubusercontent.com/60223182/200159494-33bd0022-4adb-42ad-a7bf-1de220116ee1.jpg)
+
+# Restaurant Admin View
+
+![Screenshot_2022-07-16-11-28-57-02_2529849e1798d4a568315fb6de318029](https://user-images.githubusercontent.com/60223182/200159698-68fdecb1-1814-453c-89cf-ff983a662448.jpg)
+
+![IMG_20220714_003524](https://user-images.githubusercontent.com/60223182/200159728-41ee544b-0347-4c81-a924-2f113d54cc1d.jpg)
+
+
+![IMG_20220714_003503](https://user-images.githubusercontent.com/60223182/200159776-0a417418-3b84-42a8-9121-8777491476b8.jpg)
   
   
   
